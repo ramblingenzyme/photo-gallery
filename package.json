@@ -1,6 +1,6 @@
 {
   "name": "photo-gallery",
-  "private":true,
+  "private": true,
   "packageManager": "yarn@3.3.0",
   "type": "module",
   "scripts": {
@@ -9,7 +9,9 @@
     "postinstall": "husky install"
   },
   "lint-staged": {
-    "src/*": ["prettier --write"]
+    "src/*": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "ejs": "^3.1.8",
