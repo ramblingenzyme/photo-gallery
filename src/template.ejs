@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/css/style.css" type="text/css" />
+        <script src="/js/index.js" ></script>
+    </head>
+
+    <body>
+        <section class="container">
+            <% for (const image of images) { %>
+                <div class="photo-wrapper <%= image.class %>">
+                    <img 
+                        src="/images/<%= image.src %>"
+                        width="100%"
+                        loading=lazy
+                        decoding="async"
+                    >
+                </div>
+            <% } %>
+            <dialog id="photo-popup">
+                <img id="dialog-img" />
+            </dialog>
+        </section>
+    </body>
+</html>
