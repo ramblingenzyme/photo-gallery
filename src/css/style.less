@@ -1,10 +1,31 @@
-#photo-popup {
-  max-width: max(85vw, 400px);
+body {
+  font-family: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
 }
 
-#photo-popup::backdrop {
-  background-color: rgba(0, 0, 0, 0.75);
-  cursor: pointer;
+#photo-popup {
+  max-width: max(85vw, 400px);
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition-delay: 0s;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+  }
+
+  &[open].in,
+  &[open].in::backdrop {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
 }
 
 #dialog-img {
@@ -12,8 +33,24 @@
   max-height: calc(90vh - 32px);
 }
 
+#open-orig {
+  color: rgb(255, 255, 255);
+  outline: none;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  height: 30px;
+
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+}
+
 .photo-wrapper {
-  cursor: pointer;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -47,6 +84,7 @@
   gap: var(--column-gap) var(--column-gap);
 
   .photo-wrapper {
+    cursor: pointer;
     width: calc(
       (100% - var(--column-count) * var(--column-gap)) / var(--column-count)
     );

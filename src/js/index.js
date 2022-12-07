@@ -5,8 +5,14 @@ const addCloseOnBackdrop = (dialog) => {
     const outsideX = rect.left > event.clientX || rect.right < event.clientX;
     const outsideY = rect.top > event.clientY || rect.bottom < event.clientY;
 
-    if (outsideX || outsideY) {
+    function closeModal() {
       dialog.close();
+      dialog.removeEventListener("transitionend", closeModal);
+    }
+
+    if (outsideX || outsideY) {
+      dialog.addEventListener("transitionend", closeModal);
+      dialog.classList.remove("in");
     }
   });
 };
@@ -21,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const dialog = document.getElementById("photo-popup");
   const dialogContentWrapper = document.getElementById("dialog-wrapper");
   const dialogImage = document.getElementById("dialog-img");
+  const dialogLink = document.getElementById("open-orig");
 
   const imageWrappers = document.getElementsByClassName("photo-wrapper");
 
@@ -40,9 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         dialogImage.src = nestedImg.src;
+        dialogLink.href = nestedImg.src;
 
         document.body.style.overflow = "hidden";
         dialog.showModal();
+        dialog.classList.add("in");
       }
     });
   }
