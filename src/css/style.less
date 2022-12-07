@@ -14,43 +14,73 @@
 
 .photo-wrapper {
   cursor: pointer;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.photo-wrapper > img {
+.photo-wrapper img {
   width: 100%;
 }
 
-.portrait > img {
+.portrait img {
   width: 50%;
 }
 
-.square > img {
+.square img {
   width: 80%;
 }
 
 .container {
   --column-count: 2;
   --min-column-width: 250px;
+  --column-gap: 10px;
 
   width: 90vw;
   margin: auto;
 
-  display: grid;
-  gap: 10px;
+  display: flex;
+  column-count: var(--column-count);
+  flex-wrap: wrap;
 
-  grid-template-columns: repeat(var(--column-count), minmax(250px, 1fr));
+  gap: var(--column-gap) var(--column-gap);
+
+  .photo-wrapper {
+    width: calc(
+      (100% - var(--column-count) * var(--column-gap)) / var(--column-count)
+    );
+  }
 
   @supports (grid-template-rows: masonry) {
+    display: grid;
+    grid-template-columns: repeat(
+      var(--column-count),
+      minmax(var(--min-column-width), 1fr)
+    );
     grid-template-rows: masonry;
-    masonry-auto-flow: pack ordered;
+
+    masonry-auto-flow: pack;
+
+    .photo-wrapper {
+      width: unset;
+    }
 
     .portrait {
       grid-row-end: span 2;
+
+      img {
+        width: 100%;
+      }
     }
 
     .square {
       grid-column-end: span 2;
       grid-row-end: span 2;
+
+      img {
+        width: 100%;
+      }
     }
   }
 
