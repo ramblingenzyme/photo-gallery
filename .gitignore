@@ -13,3 +13,4 @@ node_modules
 
 src/images
 src/index.html
+src/css/*.css

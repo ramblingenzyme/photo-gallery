@@ -14,7 +14,9 @@ const images = await fs.readdir(path.join(SRC_DIR, "images"));
 const imageInfo = images
   .map((i) => {
     const dimensions = sizeOf(path.join(SRC_DIR, "images", i));
-    const isTall = dimensions.height > dimensions.width;
+
+    // image orientations of 5 and above rotate so the dimensions are flipped :/
+    const isTall = dimensions.orientation >= 5 ? dimensions.width > dimensions.height : dimensions.height > dimensions.width;
     const isSquare = dimensions.height === dimensions.width;
 
     return {
