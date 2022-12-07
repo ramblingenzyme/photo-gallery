@@ -9,7 +9,7 @@
     "postinstall": "husky install"
   },
   "lint-staged": {
-    "src/**/*.{js,less}": [
+    "**/*.{mjs,js,less}": [
       "prettier --write"
     ]
   },

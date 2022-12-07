@@ -16,7 +16,10 @@ const imageInfo = images
     const dimensions = sizeOf(path.join(SRC_DIR, "images", i));
 
     // image orientations of 5 and above rotate so the dimensions are flipped :/
-    const isTall = dimensions.orientation >= 5 ? dimensions.width > dimensions.height : dimensions.height > dimensions.width;
+    const isTall =
+      dimensions.orientation >= 5
+        ? dimensions.width > dimensions.height
+        : dimensions.height > dimensions.width;
     const isSquare = dimensions.height === dimensions.width;
 
     return {
