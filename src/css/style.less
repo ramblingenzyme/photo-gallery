@@ -17,9 +17,16 @@ header {
   justify-content: space-between;
   align-items: center;
 
+  flex-direction: column;
+  font-size: 1.25rem;
+
+  @media screen and (min-width: 1000px) {
+    flex-direction: row;
+    font-size: 1rem;
+  }
+
   h1 {
     justify-self: start;
-    font-size: 1.25rem;
     margin: 0;
     margin-left: 0.5rem;
   }
