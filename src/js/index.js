@@ -55,4 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  const masonryFeatureElement = document.getElementById(
+    "masonry-feature-support"
+  );
+
+  if (CSS.supports("grid-template-rows", "masonry")) {
+    masonryFeatureElement.innerText = "hell yea, masonry layout";
+  }
 });

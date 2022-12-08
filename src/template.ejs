@@ -2,27 +2,34 @@
 
 <html lang="en">
     <head>
+        <title>ramb's photos</title>
         <link rel="stylesheet" href="/css/style.css" type="text/css" />
         <script src="/js/index.js" ></script>
     </head>
 
     <body>
-        <section class="container">
-            <% for (const image of images) { %>
-                <div class="photo-wrapper <%= image.class %>">
-                    <img 
-                        src="/images/<%= image.src %>"
-                        loading=lazy
-                        decoding="async"
-                    >
+        <header>
+            <h1>ramb's photos</h1>
+            <div id="masonry-feature-support">For best visual results, enable <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Masonry_Layout">CSS masonry layout.</a></div>
+        </header>
+        <main>
+            <section class="container">
+                <% for (const image of images) { %>
+                    <div class="photo-wrapper <%= image.class %>">
+                        <img 
+                            src="/images/<%= image.src %>"
+                            loading=lazy
+                            decoding="async"
+                        >
+                    </div>
+                <% } %>
+            </section>
+            <dialog id="photo-popup">
+                <div class="photo-wrapper">
+                    <img id="dialog-img" />
                 </div>
-            <% } %>
-        </section>
-        <dialog id="photo-popup">
-            <div class="photo-wrapper">
-                <img id="dialog-img" />
-            </div>
-            <a id="open-orig" rel="noreferrer noopener" role="button" target="_blank" tabindex="0">Open original</a>
-        </dialog>
+                <a id="open-orig" rel="noreferrer noopener" role="button" target="_blank" tabindex="0">Open original</a>
+            </dialog>
+        </main>
     </body>
 </html>
