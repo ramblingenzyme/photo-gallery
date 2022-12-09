@@ -5,6 +5,7 @@
         <title>ramb's photos</title>
         <link rel="stylesheet" href="/css/style.css" type="text/css" />
         <script src="/js/index.js" ></script>
+        <meta name="image-base-url" content="<%= imageBaseUrl %>">
     </head>
 
     <body>
@@ -17,7 +18,8 @@
                 <% for (const image of images) { %>
                     <div class="photo-wrapper <%= image.class %>">
                         <img 
-                            src="/images/<%= image.src %>"
+                            data-image-key="<%= image.key %>"
+                            src="<%= imageBaseUrl %>/<%= image.src %>"
                             loading=lazy
                             decoding="async"
                         >

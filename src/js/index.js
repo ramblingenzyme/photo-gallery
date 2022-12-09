@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const dialogImage = document.getElementById("dialog-img");
   const dialogLink = document.getElementById("open-orig");
 
+  const baseUrl = document.querySelector("[name=image-base-url]").content;
+
   const imageWrappers = document.getElementsByClassName("photo-wrapper");
 
   if (typeof dialog.showModal !== "function") {
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         dialogImage.src = nestedImg.src;
-        dialogLink.href = nestedImg.src;
+        dialogLink.href = `${baseUrl}/${nestedImg.dataset.imageKey}`;
 
         document.body.style.overflow = "hidden";
         dialog.showModal();
