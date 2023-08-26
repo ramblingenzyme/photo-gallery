@@ -50,10 +50,11 @@ main {
   border: none;
   background-color: transparent;
 
+  // these are transitioned using the `in` class.
   visibility: hidden;
   opacity: 0;
 
-  transition-delay: 0s;
+  transition-delay: 0.2s;
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 
   &::backdrop {
@@ -65,7 +66,6 @@ main {
   &[open].in::backdrop {
     opacity: 1;
     visibility: visible;
-    transition-delay: 0.2s;
   }
 
   .photo-wrapper {

@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+import less from "less";
 import ejs from "ejs";
 import path from "path";
 import fs from "fs/promises";
@@ -11,7 +12,10 @@ import sizeOf from "image-size";
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 const SRC_DIR = path.join(__dirname, "..", "src");
-const DIST_DIR = path.join(__dirname, "..", " dist");
+
+const lessContent = await fs.readFile(path.join(SRC_DIR, "css", "style.less"));
+const output = await less.render(lessContent.toString());
+await fs.writeFile(path.join(SRC_DIR, "css", "style.css"), output.css);
 
 const { CF_DISTRIBUTION, S3_BUCKET } = process.env;
 const images = await fs.readdir(path.join(SRC_DIR, "images"));
