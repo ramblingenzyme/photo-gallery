@@ -13,4 +13,6 @@ app.use(
   })
 );
 
-app.listen("3000");
+app.listen("3000", () => {
+  console.log("App started at http://localhost:3000");
+});

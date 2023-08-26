@@ -11,7 +11,10 @@ node_modules
 !.yarn/cache
 #.pnp.*
 
-src/images/*
-src/index.html
-src/css/*.css
+*.jpg
+*.JPG
+
+**/src/images/*
+**/src/index.html
+**/src/css/*.css
 .env
