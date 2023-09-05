@@ -16,14 +16,13 @@
         <main>
             <section class="container">
                 <% for (const image of images) { %>
-                    <div class="photo-wrapper <%= image.class %>">
-                        <img 
-                            data-image-key="<%= image.key %>"
-                            src="<%= imageBaseUrl %>/<%= image.src %>"
-                            loading=lazy
-                            decoding="async"
-                        >
-                    </div>
+                    <img
+                        class="photo-wrapper"
+                        data-image-key="<%= image.key %>"
+                        src="<%= imageBaseUrl %>/<%= image.src %>"
+                        loading=lazy
+                        decoding="async"
+                    >
                 <% } %>
             </section>
             <dialog id="photo-popup">

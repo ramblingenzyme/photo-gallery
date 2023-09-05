@@ -5,7 +5,7 @@ const getImageHostUrl = () =>
   document.querySelector("[name=image-base-url]").content;
 const getMasonryFeatureElement = () =>
   document.getElementById("masonry-feature-support");
-const getImageWrappers = () => document.getElementsByClassName("photo-wrapper");
+const getImages = () => document.getElementsByClassName("photo-wrapper");
 
 // The "in" class has a transition, which dims the background
 const transitionModalBackgroundIn = (dialog = getDialog()) =>
@@ -67,12 +67,8 @@ const closeModal = () => {
   transitionModalBackgroundOut(dialog);
 };
 
-const openDialogForImage = imageWrapper => () => {
-  const nestedImg = Array.from(imageWrapper.children).find(
-    child => child.tagName === "IMG"
-  );
-
-  setDialogImage(nestedImg.src, nestedImg.dataset.imageKey);
+const openDialogForImage = image => () => {
+  setDialogImage(image.src, image.dataset.imageKey);
 
   openDialog();
 };
@@ -91,9 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
     closeModal();
   });
 
-  const imageWrappers = getImageWrappers();
-  for (const imageWrapper of imageWrappers) {
-    imageWrapper.addEventListener("click", openDialogForImage(imageWrapper));
+  const images = getImages();
+  for (const image of images) {
+    image.addEventListener("click", openDialogForImage(image));
   }
 
   if (CSS.supports("grid-template-rows", "masonry")) {
