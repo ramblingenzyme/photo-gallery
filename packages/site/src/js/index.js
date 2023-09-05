@@ -53,7 +53,7 @@ const openDialog = () => {
   // Overflow hidden when the modal is open so that the user can't scroll the image list behind it.
   hideOverflow();
   dialog.showModal();
-  transitionModalBackgroundIn(dialog);
+  requestAnimationFrame(() => transitionModalBackgroundIn(dialog));
 };
 
 const closeModal = () => {
@@ -62,9 +62,9 @@ const closeModal = () => {
   // Have to close after transitioning the background away because it's part of the modal itself.
   addAutoRemovedHandler(dialog, "close", showOverflow);
   addAutoRemovedHandler(dialog, "transitionend", () =>
-    requestAnimationFrame(() => dialog.close())
+    setTimeout(() => requestAnimationFrame(() => getDialog().close()), 200)
   );
-  transitionModalBackgroundOut(dialog);
+  requestAnimationFrame(() => transitionModalBackgroundOut(dialog));
 };
 
 const openDialogForImage = image => () => {

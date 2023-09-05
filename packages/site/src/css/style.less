@@ -54,8 +54,7 @@ main {
   visibility: hidden;
   opacity: 0;
 
-  transition-delay: 0.2s;
-  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+  transition: visibility 0.5s linear 0s, opacity 0.8s ease-in-out 0.2s;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.75);
@@ -96,6 +95,7 @@ main {
 }
 
 .container {
+  // variables
   --column-count: 2;
   --min-column-width: 250px;
   --column-gap: 10px;
@@ -103,36 +103,43 @@ main {
   width: 90vw;
   margin: auto;
 
-  display: flex;
+  // Applies to grid and flex
   column-count: var(--column-count);
-  flex-wrap: wrap;
-
   gap: var(--column-gap) var(--column-gap);
+
+  // Default to grid
+  display: grid;
+
+  grid-template-columns: repeat(
+    var(--column-count),
+    // Guarantees that columns don't become smaller than --min-column-width
+    minmax(var(--min-column-width), 1fr)
+  );
+  grid-template-rows: masonry;
+  masonry-auto-flow: pack;
 
   .photo-wrapper {
     cursor: pointer;
-    width: calc(
-      (100% - var(--column-count) * var(--column-gap)) / var(--column-count)
-    );
-
     margin: auto;
-    aspect-ratio: 3/2;
     object-fit: contain;
+    width: 100%;
+    aspect-ratio: auto;
   }
 
-  @supports (grid-template-rows: masonry) {
-    display: grid;
-    grid-template-columns: repeat(
-      var(--column-count),
-      minmax(var(--min-column-width), 1fr)
-    );
-    grid-template-rows: masonry;
-
-    masonry-auto-flow: pack;
+  // Fallback to flexbox
+  @supports not (grid-template-rows: masonry) {
+    display: flex;
+    flex-wrap: wrap;
 
     .photo-wrapper {
-      width: 100%;
-      aspect-ratio: auto;
+      width: calc(
+        // Numerator = available space 100% - gaps
+          // Denominator = number of columns
+          (100% - var(--column-count) * var(--column-gap)) / var(--column-count)
+      );
+
+      // Override the aspect ratio to my default landscape ratio
+      aspect-ratio: 3/2;
     }
   }
 
