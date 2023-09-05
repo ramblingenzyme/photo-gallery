@@ -6,6 +6,7 @@ import ejs from "ejs";
 import path from "path";
 import fs from "fs/promises";
 import url from "url";
+import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
@@ -16,7 +17,30 @@ const output = await less.render(lessContent.toString());
 await fs.writeFile(path.join(SRC_DIR, "css", "style.css"), output.css);
 
 const { CF_DISTRIBUTION, S3_BUCKET } = process.env;
-const images = await fs.readdir(path.join(SRC_DIR, "images"));
+
+async function getImages() {
+  const s3Client = new S3Client();
+
+  const images = [];
+  let nextContinuationToken = undefined;
+
+  do {
+    const response = await s3Client.send(
+      new ListObjectsV2Command({
+        Bucket: S3_BUCKET
+      })
+    );
+
+    images.push(...response.Contents);
+    nextContinuationToken = response.NextContinuationToken;
+  } while (nextContinuationToken);
+
+  const sorted = images.sort((a, b) => b.LastModified - a.LastModified);
+
+  return sorted.map(obj => obj.Key);
+}
+
+const images = await getImages();
 
 const getRequestBody = (image, width) =>
   Buffer.from(
@@ -32,15 +56,12 @@ const getRequestBody = (image, width) =>
     })
   ).toString("base64");
 
-const imageInfo = images
-  .map(image => {
-    return {
-      key: image,
-      src: getRequestBody(image, 1200)
-    };
-  })
-  .slice()
-  .reverse();
+const imageInfo = images.map(image => {
+  return {
+    key: image,
+    src: getRequestBody(image, 1200)
+  };
+});
 
 const content = await ejs.renderFile(
   path.resolve(path.join(SRC_DIR, "template.ejs")),

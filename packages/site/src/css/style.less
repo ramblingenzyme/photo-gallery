@@ -104,7 +104,6 @@ main {
   margin: auto;
 
   // Applies to grid and flex
-  column-count: var(--column-count);
   gap: var(--column-gap) var(--column-gap);
 
   // Default to grid
@@ -121,25 +120,28 @@ main {
   .photo-wrapper {
     cursor: pointer;
     margin: auto;
-    object-fit: contain;
     width: 100%;
-    aspect-ratio: auto;
   }
 
   // Fallback to flexbox
   @supports not (grid-template-rows: masonry) {
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
 
     .photo-wrapper {
-      width: calc(
+      flex: auto;
+      height: 200px;
+
+      width: unset;
+      object-fit: contain;
+
+      max-width: calc(
         // Numerator = available space 100% - gaps
           // Denominator = number of columns
           (100% - var(--column-count) * var(--column-gap)) / var(--column-count)
       );
 
-      // Override the aspect ratio to my default landscape ratio
-      aspect-ratio: 3/2;
+      margin: 0;
     }
   }
 
